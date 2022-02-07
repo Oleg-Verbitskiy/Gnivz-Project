@@ -1,37 +1,35 @@
 import React from 'react';
 import { useState } from 'react';
 import './styles/App.css';
+import WordList from './components/WordList';
+import WordForm from './components/WordForm';
 import WordItem from './components/WordItem'; 
 import MyButton from './components/UI/button/MyButton';
 import MyInput from './components/UI/input/MyInput';
-import WordList from './components/WordList';
 
 function App() {
 
   const [words, setWords] = useState([
-      {id: 1, usedword:'собака', body:'собака'},
-      {id: 2, usedword:'кошка', body:'кошку'},
+      {id: 1, usedword:'собака', result:'собака'},
+      {id: 2, usedword:'кошка', result:'кошку'},
   ])
 
-  const [usedword, setUsedWord] = useState('')
-  const addNewWord = (e) => {
-    e.preventDefault()
-   };
+  const createWord = (newWord) => {
+    setWords([...words, newWord])
+  }
 
+  const removeWord = (word) => {
+    setWords(words.filter(w => w.id !== word.id))
+  }
 
   return (
     <div className="App">
       <h1>Это твой персональный помощник по проверке падежей в русском языке!</h1>
-      <form>
-        <MyInput 
-          value={usedword}
-          onChange={e => setUsedWord(e.target.value)}
-          type="text" 
-          placeholder="Введите слово"
-        />
-        <MyButton onClick={addNewWord}>Проверить</MyButton>
-      </form>
-      <WordList words={words}/>
+      <WordForm create={createWord}/>
+      {words.length !== 0
+      ? <WordList remove={removeWord} words={words}/>
+      : <h1 style={{textAlign: 'center'}}>Список проверенных слов пуст!</h1>
+      }
     </div>
   );
 };

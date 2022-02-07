@@ -6,13 +6,13 @@ const WordItem = (props) => {
     return (
         <div className="word">
             <div className="word__content">
-                <strong>{props.word.id}. {props.word.usedword} </strong>
+                <strong>{props.number}. {props.word.usedword} </strong>
                 <div>
-                    {props.word.body}
+                    {props.word.result}
                 </div>
             </div>
             <div className="word__btns">
-                <MyButton>Стереть</MyButton>
+                <MyButton onClick={() => props.remove(props.word)}>Стереть</MyButton>
             </div>
         </div>
     );
